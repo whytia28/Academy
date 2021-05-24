@@ -14,6 +14,7 @@ import com.example.academies.data.CourseEntity
 import com.example.academies.databinding.ActivityDetailCourseBinding
 import com.example.academies.databinding.ContentDetailCourseBinding
 import com.example.academies.ui.reader.CourseReaderActivity
+import com.example.academies.viewmodel.ViewModelFactory
 
 class DetailCourseActivity : AppCompatActivity() {
 
@@ -36,9 +37,10 @@ class DetailCourseActivity : AppCompatActivity() {
 
         val adapter = DetailCourseAdapter()
 
+        val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(
             this,
-            ViewModelProvider.NewInstanceFactory()
+            factory
         )[DetailCourseViewModel::class.java]
 
         val extras = intent.extras
@@ -48,7 +50,7 @@ class DetailCourseActivity : AppCompatActivity() {
                 viewModel.setSelectedCourse(courseId)
                 val modules = viewModel.getModules()
                 adapter.setModule(modules)
-                populateCourse(viewModel.getCourse() as CourseEntity)
+                populateCourse(viewModel.getCourse())
             }
         }
 

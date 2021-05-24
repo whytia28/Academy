@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.academies.data.ModuleEntity
 import com.example.academies.databinding.FragmentModuleContentBinding
 import com.example.academies.ui.reader.CourseReaderViewModel
+import com.example.academies.viewmodel.ViewModelFactory
 
 
 class ModuleContentFragment : Fragment() {
@@ -24,7 +25,8 @@ class ModuleContentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        fragmentModuleContentBinding = FragmentModuleContentBinding.inflate(inflater, container, false)
+        fragmentModuleContentBinding =
+            FragmentModuleContentBinding.inflate(inflater, container, false)
         return fragmentModuleContentBinding.root
 
     }
@@ -32,14 +34,21 @@ class ModuleContentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(requireActivity(), ViewModelProvider.NewInstanceFactory())[CourseReaderViewModel::class.java]
+
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            val viewModel =
+                ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
             val module = viewModel.getSelectedModule()
             populateWebView(module)
         }
     }
 
     private fun populateWebView(module: ModuleEntity) {
-        fragmentModuleContentBinding.webView.loadData(module.contentEntity?.content ?: "", "text/html", "UTF-8")
+        fragmentModuleContentBinding.webView.loadData(
+            module.contentEntity?.content ?: "",
+            "text/html",
+            "UTF-8"
+        )
     }
 
 }

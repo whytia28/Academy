@@ -11,16 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.academies.R
 import com.example.academies.data.CourseEntity
 import com.example.academies.databinding.FragmentBookmarkBinding
+import com.example.academies.viewmodel.ViewModelFactory
 
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
-    lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
+    private lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+
         fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
         return fragmentBookmarkBinding.root
     }
@@ -29,9 +30,11 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
+
+            val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(
                 this,
-                ViewModelProvider.NewInstanceFactory()
+                factory
             )[BookmarkViewModel::class.java]
             val courses = viewModel.getBookmarks()
             val adapter = BookmarkAdapter(this)

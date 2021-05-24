@@ -9,9 +9,10 @@ import com.example.academies.R
 import com.example.academies.ui.academy.AcademyFragment
 import com.example.academies.ui.bookmark.BookmarkFragment
 
-class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    companion object{
+    companion object {
         @StringRes
         private val TAB_TITLES = intArrayOf(R.string.home, R.string.bookmark)
     }
@@ -26,6 +27,7 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
             else -> Fragment()
         }
 
-    override fun getPageTitle(position: Int): CharSequence  = mContext.resources.getString(TAB_TITLES[position])
+    override fun getPageTitle(position: Int): CharSequence =
+        mContext.resources.getString(TAB_TITLES[position])
 
 }
