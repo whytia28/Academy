@@ -2,6 +2,7 @@ package com.example.academies.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -47,10 +48,19 @@ class DetailCourseActivity : AppCompatActivity() {
         if (extras != null) {
             val courseId = extras.getString(EXTRA_COURSE)
             if (courseId != null) {
+
+                activityDetailCourseBinding.detailContent.content.visibility = View.INVISIBLE
+                activityDetailCourseBinding.detailContent.progressBar.visibility = View.VISIBLE
+
                 viewModel.setSelectedCourse(courseId)
-                val modules = viewModel.getModules()
-                adapter.setModule(modules)
-                populateCourse(viewModel.getCourse())
+                viewModel.getModules().observe(this, { modules ->
+                    activityDetailCourseBinding.detailContent.progressBar.visibility = View.GONE
+                    activityDetailCourseBinding.detailContent.content.visibility = View.VISIBLE
+
+                    adapter.setModule(modules)
+                    adapter.notifyDataSetChanged()
+                })
+                viewModel.getCourse().observe(this, { course -> populateCourse(course) })
             }
         }
 
