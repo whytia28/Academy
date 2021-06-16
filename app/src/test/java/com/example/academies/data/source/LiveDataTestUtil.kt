@@ -1,4 +1,4 @@
-package com.example.academies.utils
+package com.example.academies.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

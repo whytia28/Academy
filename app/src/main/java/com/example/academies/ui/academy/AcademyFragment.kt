@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.academies.databinding.FragmentAcademyBinding
 import com.example.academies.viewmodel.ViewModelFactory
+import com.example.academies.vo.Status
 
 
 class AcademyFragment : Fragment() {
@@ -34,17 +36,28 @@ class AcademyFragment : Fragment() {
             )[AcademyViewModel::class.java]
 
             val academyAdapter = AcademyAdapter()
-            fragmentAcademyBinding.progressBar.visibility = View.VISIBLE
             viewModel.getCourses().observe(viewLifecycleOwner, { courses ->
-                fragmentAcademyBinding.progressBar.visibility = View.GONE
-                academyAdapter.setCourses(courses)
-                academyAdapter.notifyDataSetChanged()
+                if (courses != null) {
+                    when (courses.status) {
+                        Status.LOADING -> fragmentAcademyBinding.progressBar.visibility =
+                            View.VISIBLE
+                        Status.SUCCESS -> {
+                            fragmentAcademyBinding.progressBar.visibility = View.GONE
+                            academyAdapter.setCourses(courses.data)
+                            academyAdapter.notifyDataSetChanged()
+                        }
+                        Status.ERROR -> {
+                            fragmentAcademyBinding.progressBar.visibility = View.GONE
+                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             })
 
             with(fragmentAcademyBinding.rvAcademy) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = academyAdapter
+                this.layoutManager = LinearLayoutManager(context)
+                this.setHasFixedSize(true)
+                this.adapter = academyAdapter
             }
         }
     }

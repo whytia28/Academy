@@ -3,7 +3,6 @@ package com.example.academies.data.source
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.academies.data.source.remote.RemoteDataSource
 import com.example.academies.utils.DataDummy
-import com.example.academies.utils.LiveDataTestUtil
 import org.junit.Test
 
 import org.junit.Assert.*

@@ -1,7 +1,7 @@
 package com.example.academies.utils
 
-import com.example.academies.data.CourseEntity
-import com.example.academies.data.ModuleEntity
+import com.example.academies.data.source.local.entity.CourseEntity
+import com.example.academies.data.source.local.entity.ModuleEntity
 import com.example.academies.data.source.remote.response.ContentResponse
 import com.example.academies.data.source.remote.response.CourseResponse
 import com.example.academies.data.source.remote.response.ModuleResponse
