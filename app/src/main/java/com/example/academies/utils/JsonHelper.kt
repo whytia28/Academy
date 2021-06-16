@@ -1,7 +1,6 @@
 package com.example.academies.utils
 
 import android.content.Context
-import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter
 import com.example.academies.data.source.remote.response.ContentResponse
 import com.example.academies.data.source.remote.response.CourseResponse
 import com.example.academies.data.source.remote.response.ModuleResponse
