@@ -29,8 +29,8 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
         fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
         return fragmentBookmarkBinding.root
-    }
 
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         itemTouchHelper.attachToRecyclerView(fragmentBookmarkBinding.rvBookmark)
@@ -47,14 +47,12 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
             fragmentBookmarkBinding.progressBar.visibility = View.VISIBLE
             viewModel.getBookmarks().observe(viewLifecycleOwner, { courses ->
                 fragmentBookmarkBinding.progressBar.visibility = View.GONE
-                adapter.submitList(courses)
-                adapter.notifyDataSetChanged()
+                    adapter.submitList(courses)
             })
-            with(fragmentBookmarkBinding.rvBookmark) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                this.adapter = adapter
-            }
+            fragmentBookmarkBinding.rvBookmark.layoutManager = LinearLayoutManager(context)
+            fragmentBookmarkBinding.rvBookmark.setHasFixedSize(true)
+            fragmentBookmarkBinding.rvBookmark.adapter = adapter
+
         }
     }
 

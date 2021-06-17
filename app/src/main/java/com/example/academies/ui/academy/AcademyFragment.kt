@@ -44,7 +44,6 @@ class AcademyFragment : Fragment() {
                         Status.SUCCESS -> {
                             fragmentAcademyBinding.progressBar.visibility = View.GONE
                             academyAdapter.submitList(courses.data)
-                            academyAdapter.notifyDataSetChanged()
                         }
                         Status.ERROR -> {
                             fragmentAcademyBinding.progressBar.visibility = View.GONE
@@ -53,14 +52,9 @@ class AcademyFragment : Fragment() {
                     }
                 }
             })
-
-            with(fragmentAcademyBinding.rvAcademy) {
-                this.layoutManager = LinearLayoutManager(context)
-                this.setHasFixedSize(true)
-                this.adapter = academyAdapter
-            }
+            fragmentAcademyBinding.rvAcademy.layoutManager = LinearLayoutManager(context)
+            fragmentAcademyBinding.rvAcademy.setHasFixedSize(true)
+            fragmentAcademyBinding.rvAcademy.adapter = academyAdapter
         }
     }
-
-
 }
