@@ -2,6 +2,7 @@ package com.example.academies.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
 import com.example.academies.data.source.local.LocalDataSource
 import com.example.academies.data.source.local.entity.CourseEntity
 import com.example.academies.data.source.local.entity.CourseWithModule
@@ -9,6 +10,7 @@ import com.example.academies.data.source.local.entity.ModuleEntity
 import com.example.academies.data.source.remote.RemoteDataSource
 import com.example.academies.utils.AppExecutors
 import com.example.academies.utils.DataDummy
+import com.example.academies.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -37,11 +39,11 @@ class AcademyRepositoryTest {
 
     @Test
     fun getAllCourses() {
-        val dummyCourses = MutableLiveData<List<CourseEntity>>()
-        dummyCourses.value = DataDummy.generateDummyCourses()
-        `when`(local.getAllCourses()).thenReturn(dummyCourses)
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, CourseEntity>
+        `when`(local.getAllCourses()).thenReturn(dataSourceFactory)
+        academyRepository.getAllCourses()
 
-        val courseEntities = LiveDataTestUtil.getValue(academyRepository.getAllCourses())
+        val courseEntities = Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyCourses()))
         verify(local).getAllCourses()
 
         assertNotNull(courseEntities.data)
@@ -50,15 +52,15 @@ class AcademyRepositoryTest {
 
     @Test
     fun getBookmarkCourses() {
-        val dummyCourses = MutableLiveData<List<CourseEntity>>()
-        dummyCourses.value = DataDummy.generateDummyCourses()
-        `when`(local.getBookmarkedCourses()).thenReturn(dummyCourses)
+        val dataSourceFactory = mock(DataSource.Factory::class.java) as DataSource.Factory<Int, CourseEntity>
+        `when`(local.getBookmarkedCourses()).thenReturn(dataSourceFactory)
+        academyRepository.getBookmarkCourses()
 
-        val courseEntities = LiveDataTestUtil.getValue(academyRepository.getBookmarkCourses())
+        val courseEntities = Resource.success(PagedListUtil.mockPagedList(DataDummy.generateDummyCourses()))
         verify(local).getBookmarkedCourses()
 
         assertNotNull(courseEntities)
-        assertEquals(courseResponse.size.toLong(), courseEntities.size.toLong())
+        assertEquals(courseResponse.size.toLong(), courseEntities.data?.size?.toLong())
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.example.academies.data
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import androidx.paging.PagingData
 import com.example.academies.data.source.local.entity.CourseEntity
 import com.example.academies.data.source.local.entity.CourseWithModule
 import com.example.academies.data.source.local.entity.ModuleEntity
